@@ -48,12 +48,12 @@ const SignUp = () => {
         const token = !!responseData.idToken;
         if (token) {
           alert("You have signedUp successfully");
+          redirect("/");
         } else {
           alert("SignUp failed");
         }
 
         dispatch(authSliceActions.login(responseData.idToken));
-        redirect("/");
       } catch (error) {
         console.log(error);
       }
