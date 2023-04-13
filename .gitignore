@@ -1,0 +1,21 @@
+# Dependency directories
+node_modules/
+yarn.lock
+package-lock.json
+
+# Production build directory
+build/
+
+# Local development environment files
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+.vscode/
+.idea/
+
+# Miscellaneous
+Thumbs.db
+.DS_Store
