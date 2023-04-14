@@ -18,7 +18,7 @@ export const addMailBox = (mailData) => {
       );
 
       if (senderMail !== recieverMail) {
-        await fetch(
+        const responseRecieve = await fetch(
           `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${recieverMail}.json`,
           {
             method: "POST",
@@ -28,6 +28,11 @@ export const addMailBox = (mailData) => {
             },
           }
         );
+        if (responseRecieve.ok) {
+          alert("Email successfull sent");
+        } else {
+          alert("failed,Please try again!");
+        }
       }
       const responseData = await response.json();
       console.log(responseData, "kkkkk");
@@ -39,7 +44,7 @@ export const addMailBox = (mailData) => {
           })
         );
       } else {
-        throw new Error("Failed");
+        alert("Failed,please try again!");
       }
     } catch (error) {
       console.log(error);

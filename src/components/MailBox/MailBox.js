@@ -3,7 +3,6 @@ import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { useDispatch } from "react-redux";
-import { mailSliceActions } from "../store/mailBoxSlice";
 import { addMailBox } from "../store/mailBoxActions";
 const MailBox = () => {
   const [editorState, setEditorState] = useState(() =>
@@ -19,6 +18,7 @@ const MailBox = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     const mailData = {
       fromMail: localStorage.getItem("email"),
       tomail: sendingMailRef.current.value,
@@ -26,13 +26,15 @@ const MailBox = () => {
       messsage: editorState.getCurrentContent().getPlainText(),
     };
     dispatch(addMailBox(mailData));
+    sendingMailRef.current.value = "";
+    subjectMailRef.current.value = "";
   };
 
   return (
     <div>
       <form>
         <div>
-          <input type="text" ref={sendingMailRef} required />
+          <input type="email" ref={sendingMailRef} required placeholder="To"/>
         </div>
 
         <div>
