@@ -36,6 +36,7 @@ const Login = () => {
       } else {
         alert("Login failed");
       }
+      localStorage.setItem("email",responseData.email)
       dispatch(authSliceActions.login(responseData.idToken));
     } catch (error) {
       console.log(error);

@@ -26,6 +26,9 @@ const Navbar = () => {
               <NavLink to="/login">Logout</NavLink>
             </button>
           </li>
+          <li>
+            <NavLink to="/mailbox">MailBox</NavLink>
+          </li>
         </ul>
       </nav>
     </Fragment>
