@@ -6,6 +6,7 @@ import Navbar from "../Navbar/Navbar";
 import SignUp from "../Auth/SignUp";
 import Login from "../Auth/Login";
 import MailBox from "../MailBox/MailBox";
+import Inbox from "../MailBox/Inbox";
 
 const RoutesApp = () => {
   return (
@@ -23,6 +24,7 @@ const RoutesApp = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/mailbox" element={<MailBox />} />
+          <Route path="/inbox" element={<Inbox />} />
         </Route>
       </Routes>
     </Fragment>

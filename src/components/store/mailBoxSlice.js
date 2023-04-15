@@ -7,7 +7,7 @@ const mailboxSlice = createSlice({
   },
   reducers: {
     mailSending(state, action) {
-      state.mails = [action.payload, ...state.mails];
+      state.mails = [...action.payload];
       console.log(action.payload, "llll");
       console.log(state.mails, "pppp");
     },
