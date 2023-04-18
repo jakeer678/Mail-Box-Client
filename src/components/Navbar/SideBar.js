@@ -1,3 +1,20 @@
+// import { Button } from "@mui/material";
+// import React, { useContext } from "react";
+// import { contextStore } from "../UseContext/ContextStore";
+
+// const SideBar = () => {
+//   const { handleClickOpen } = useContext(contextStore);
+//   return (
+//     <div>
+//       <Button variant="outlined" onClick={handleClickOpen}>
+//         compose
+//       </Button>
+//     </div>
+//   );
+// };
+
+// export default SideBar;
+
 import React, { useContext } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 
@@ -61,8 +78,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 const SideBar = () => {
   const theme = useTheme();
   const total = useSelector((state) => state.mailBox.mails);
-  const totalNum = total.length
-  const read = useSelector((state) => state.mailBox.read);
+  const totalNum = total.length;
   const { openDrawer, handleDrawerClose, handleClickOpen } =
     useContext(contextStore);
 
@@ -93,30 +109,21 @@ const SideBar = () => {
         <Divider />
 
         <List>
-          <Button variant="outlined" onClick={handleClickOpen}>
-            compose
-          </Button>
           <div>
             <NavLink to="/inbox">
               <AttachEmailIcon />
               Inbox {totalNum}
-              {read && <p>Unread</p>}
+            </NavLink>
+          </div>
+          <div>
+            <NavLink to="/sentmail">
+              <IosShareIcon />
+              Sent mail
             </NavLink>
           </div>
         </List>
         <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
+        <List></List>
       </Drawer>
       <Main open={openDrawer}>
         <DrawerHeader />

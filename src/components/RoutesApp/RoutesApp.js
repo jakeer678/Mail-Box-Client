@@ -8,6 +8,7 @@ import Login from "../Auth/Login";
 import MailBox from "../MailBox/MailBox";
 import Inbox from "../MailBox/Inbox";
 import Message from "../Navbar/Message";
+import SentMail from "../MailBox/SentMail";
 
 const RoutesApp = () => {
   return (
@@ -27,6 +28,7 @@ const RoutesApp = () => {
           <Route path="/mailbox" element={<MailBox />} />
           <Route path="/inbox" element={<Inbox />} />
           <Route path="/message" element={<Message />} />
+          <Route path="/sentmail" element={<SentMail />} />
         </Route>
       </Routes>
     </Fragment>
