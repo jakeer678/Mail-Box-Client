@@ -4,12 +4,20 @@ const mailboxSlice = createSlice({
   name: "mailBox",
   initialState: {
     mails: [],
+    totalMessages: 0,
+   
   },
   reducers: {
     mailSending(state, action) {
-      state.mails = [...action.payload];
-      console.log(action.payload, "llll");
-      console.log(state.mails, "pppp");
+      state.mails = [ ...action.payload];
+      state.totalMessages++;
+    },
+    marksAsread(state,action){
+      const mailId = action.payload
+      const mail =state.mails.find((mail)=>mail.id===mailId);
+      if(mail) {
+        mail.read= true
+      }
     },
   },
 });

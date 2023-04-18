@@ -20,6 +20,7 @@ import { contextStore } from "../UseContext/ContextStore";
 import { Button, IconButton } from "@mui/material";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import { NavLink } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const drawerWidth = 240;
 
@@ -44,7 +45,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 
 let sidebarList = [
   { Compose: <AttachEmailIcon /> },
-  { Inbox: <ForwardToInboxIcon /> },
+  { Inbox: "Inbox" },
   { Starred: <IosShareIcon /> },
   { Send: <DraftsIcon /> },
 ];
@@ -59,8 +60,11 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 const SideBar = () => {
   const theme = useTheme();
-
-  const { openDrawer, handleDrawerClose,handleClickOpen } = useContext(contextStore);
+  const total = useSelector((state) => state.mailBox.mails);
+  const totalNum = total.length
+  const read = useSelector((state) => state.mailBox.read);
+  const { openDrawer, handleDrawerClose, handleClickOpen } =
+    useContext(contextStore);
 
   return (
     <div>
@@ -89,19 +93,16 @@ const SideBar = () => {
         <Divider />
 
         <List>
-        <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
-          {sidebarList.map((item, index) => (
-            <div key={index}>
-              <div>{item.Compose} </div>
-              <div>
-                <NavLink to="/inbox"> {item.Inbox}</NavLink>
-              </div>
-              <div>{item.Starred} </div>
-              <div>{item.Send} </div>
-            </div>
-          ))}
+          <Button variant="outlined" onClick={handleClickOpen}>
+            compose
+          </Button>
+          <div>
+            <NavLink to="/inbox">
+              <AttachEmailIcon />
+              Inbox {totalNum}
+              {read && <p>Unread</p>}
+            </NavLink>
+          </div>
         </List>
         <Divider />
         <List>

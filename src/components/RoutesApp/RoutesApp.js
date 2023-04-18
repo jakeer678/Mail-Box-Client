@@ -7,6 +7,7 @@ import SignUp from "../Auth/SignUp";
 import Login from "../Auth/Login";
 import MailBox from "../MailBox/MailBox";
 import Inbox from "../MailBox/Inbox";
+import Message from "../Navbar/Message";
 
 const RoutesApp = () => {
   return (
@@ -25,6 +26,7 @@ const RoutesApp = () => {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/mailbox" element={<MailBox />} />
           <Route path="/inbox" element={<Inbox />} />
+          <Route path="/message" element={<Message />} />
         </Route>
       </Routes>
     </Fragment>
