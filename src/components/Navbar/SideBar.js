@@ -15,7 +15,7 @@
 
 // export default SideBar;
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 
 import Drawer from "@mui/material/Drawer";
@@ -27,17 +27,13 @@ import IosShareIcon from "@mui/icons-material/IosShare";
 import Divider from "@mui/material/Divider";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+
 import { contextStore } from "../UseContext/ContextStore";
-import { Button, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import DraftsIcon from "@mui/icons-material/Drafts";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import axios from "axios";
 
 const drawerWidth = 240;
 
@@ -60,13 +56,6 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
   })
 );
 
-let sidebarList = [
-  { Compose: <AttachEmailIcon /> },
-  { Inbox: "Inbox" },
-  { Starred: <IosShareIcon /> },
-  { Send: <DraftsIcon /> },
-];
-
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
   alignItems: "center",
@@ -76,11 +65,51 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 const SideBar = () => {
+  const [unreadCount, setUnreadCount] = useState(0);
   const theme = useTheme();
   const total = useSelector((state) => state.mailBox.mails);
   const totalNum = total.length;
   const { openDrawer, handleDrawerClose, handleClickOpen } =
     useContext(contextStore);
+
+  const getData = async () => {
+    const email = localStorage
+      .getItem("email")
+      .replace("@", "")
+      .replace(".", "");
+    console.log(email, "kkkk");
+
+    try {
+      const response = await fetch(
+        `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${email}.json`
+      );
+
+      if (!response.ok) {
+        throw new Error("Could not fetch cart data ");
+      }
+
+      const data = await response.json();
+      console.log(data, "ssss");
+
+      let count = 0;
+      for (let key in data) {
+        if (!data[key].read) {
+          count++;
+        }
+      }
+      setUnreadCount(count);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getData();
+    const interval = setInterval(() => {
+      getData();
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div>
@@ -97,6 +126,7 @@ const SideBar = () => {
         anchor="left"
         open={openDrawer}
       >
+        <button onClick={handleClickOpen}>Compose</button>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
@@ -112,7 +142,7 @@ const SideBar = () => {
           <div>
             <NavLink to="/inbox">
               <AttachEmailIcon />
-              Inbox {totalNum}
+              Inbox {totalNum}({unreadCount} unread)
             </NavLink>
           </div>
           <div>
