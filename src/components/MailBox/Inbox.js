@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import "./MailBox.css";
 import { mailSliceActions } from "../store/mailBoxSlice";
@@ -8,6 +8,7 @@ import axios from "axios";
 const Inbox = () => {
   const dispatch = useDispatch();
   const mails = useSelector((state) => state.mailBox.mails);
+  const [mailCount, setMailCount] = useState(0);
   const naviigate = useNavigate();
   console.log(mails, "sasasanoor");
   const getData = async () => {
@@ -39,21 +40,6 @@ const Inbox = () => {
     }
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const handleMailClick = (item) => {
-    if (!item.read) {
-      dispatch(mailSliceActions.marksAsread(item.id));
-    }
-  };
-
-  const handleNavigator = (item) => {
-    console.log(item, "iiiiiiii");
-    naviigate("/message", { state: item });
-  };
-
   const deleteMails = async (id) => {
     const emailUrl = localStorage
       .getItem("email")
@@ -71,6 +57,40 @@ const Inbox = () => {
       console.log(error);
     }
   };
+
+  const handleMailClick = async (item) => {
+    const getEmailUrl = localStorage
+      .getItem("email")
+      .replace("@", "")
+      .replace(".", "");
+    if (!item.read) {
+      try {
+        await axios.patch(
+          `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${getEmailUrl}/${item.id}.json`,
+          { read: true }
+        );
+
+        dispatch(mailSliceActions.marksAsRead(item.id));
+        setMailCount(mailCount - 1);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const handleNavigator = (item) => {
+    console.log(item, "iiiiiiii");
+    naviigate("/message", { state: item });
+  };
+
+  useEffect(() => {
+    getData();
+    const interval = setInterval(() => {
+      getData();
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="mail-list">
       {mails.map((item) => (
@@ -81,7 +101,7 @@ const Inbox = () => {
         >
           <div>{item.fromMail}</div>
           <div className="mail-title" onClick={() => handleNavigator(item)}>
-            {item.subjectMail}
+            <div>{item.subjectMail}</div>
             <div className="mail-body">{item.messsage}</div>
           </div>
 
