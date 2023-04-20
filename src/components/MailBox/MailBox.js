@@ -2,10 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-
+import Button from "@mui/material/Button";
 import "./MailBox.css";
 import { addmail } from "../store/mailActions";
-import "./MailBox.css";
+
 
 const MailBox = () => {
   const [editorState, setEditorState] = useState(() =>
@@ -32,21 +32,32 @@ const MailBox = () => {
   };
 
   return (
-    <div>
-      <form>
-        <div>
-          <input type="email" ref={sendingMailRef} required placeholder="To" />
-        </div>
+    <div className="formContainer">
+      <div>
+        <input
+          type="email"
+          ref={sendingMailRef}
+          required
+          placeholder="To"
+          className="emailSending"
+        />
+      </div>
 
-        <div>
-          <input type="text" ref={subjectMailRef} required />
-        </div>
-        <div>
-          <button onClick={handleSubmit}>Send Data</button>
-        </div>
-      </form>
-
-      <Editor editorState={editorState} onEditorStateChange={editorHandler} />
+      <div>
+        <input
+          type="text"
+          ref={subjectMailRef}
+          required
+          className="emailSending"
+          placeholder="subject"
+        />
+      </div>
+      <Editor editorState={editorState} onEditorStateChange={editorHandler} placeholder="compose"/>
+      <div  className="btn">
+        <Button onClick={handleSubmit} type="submit" variant="contained">
+          Send mail
+        </Button>
+      </div>
     </div>
   );
 };

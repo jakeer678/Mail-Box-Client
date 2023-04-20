@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <>
       <h2>Welcome to Home page</h2>
-      <duv>
+      <div>
         <img
           className="container"
           src={
@@ -13,7 +13,7 @@ const Home = () => {
           }
           alt="imagess"
         />
-      </duv>
+      </div>
     </>
   );
 };

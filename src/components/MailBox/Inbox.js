@@ -4,7 +4,7 @@ import "./MailBox.css";
 import { mailSliceActions } from "../store/mailBoxSlice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useFetch } from "../RoutesPages/useFetch";
+
 
 const Inbox = () => {
   const dispatch = useDispatch();
@@ -14,44 +14,44 @@ const Inbox = () => {
   const naviigate = useNavigate();
   console.log(mails, "sasasanoor");
 
-  const email = localStorage.getItem("email").replace("@", "").replace(".", "");
-  console.log(email, "kkkk");
-  const { data, loading } = useFetch(
-    `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${email}.json`
-  );
+//   const email = localStorage.getItem("email").replace("@", "").replace(".", "");
+//   console.log(email, "kkkk");
+//   const { data, loading } = useFetch(
+//     `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${email}.json`
+//   );
 
-if(loading) {
-  return <p>Loading</p>
-}
+// if(loading) {
+//   return <p>Loading</p>
+// }
 
-  // const getData = async () => {
-  //   const email = localStorage
-  //     .getItem("email")
-  //     .replace("@", "")
-  //     .replace(".", "");
-  //   console.log(email, "kkkk");
+  const getData = async () => {
+    const email = localStorage
+      .getItem("email")
+      .replace("@", "")
+      .replace(".", "");
+    console.log(email, "kkkk");
 
-  //   try {
-  //     const response = await fetch(
-  //       `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${email}.json`
-  //     );
+    try {
+      const response = await fetch(
+        `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${email}.json`
+      );
 
-  //     if (!response.ok) {
-  //       throw new Error("Could not fetch cart data ");
-  //     }
+      if (!response.ok) {
+        throw new Error("Could not fetch cart data ");
+      }
 
-  //     const data = await response.json();
-  //     console.log(data, "ssss");
-  //     let mailsData = [];
-  //     for (let key in data) {
-  //       mailsData.push({ id: key, ...data[key] });
-  //     }
-  //     console.log(mailsData, "ooooo");
-  //     dispatch(mailSliceActions.mailSending(mailsData));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+      const data = await response.json();
+      console.log(data, "ssss");
+      let mailsData = [];
+      for (let key in data) {
+        mailsData.push({ id: key, ...data[key] });
+      }
+      console.log(mailsData, "ooooo");
+      dispatch(mailSliceActions.mailSending(mailsData));
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const deleteMails = async (id) => {
     const emailUrl = localStorage
@@ -96,13 +96,13 @@ if(loading) {
     naviigate("/message", { state: item });
   };
 
-  // useEffect(() => {
-  //   getData();
-  //   const interval = setInterval(() => {
-  //     getData();
-  //   }, 2000);
-  //   return () => clearInterval(interval);
-  // }, []);
+  useEffect(() => {
+    getData();
+    const interval = setInterval(() => {
+      getData();
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="mail-list">

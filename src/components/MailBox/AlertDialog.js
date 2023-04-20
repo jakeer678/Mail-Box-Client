@@ -8,6 +8,7 @@ import { Editor } from "react-draft-wysiwyg";
 import { contextStore } from "../UseContext/ContextStore";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { addmail } from "../store/mailActions";
+import "./MailBox.css";
 
 export default function AlertDialog() {
   const [editorState, setEditorState] = useState();
@@ -44,23 +45,31 @@ export default function AlertDialog() {
       >
         <DialogTitle id="alert-dialog-title"></DialogTitle>
         <DialogContent>
-          <div>
+          <div className="formContainer">
             <div>
               <input
                 type="email"
                 ref={sendingMailRef}
                 required
                 placeholder="To"
+                className="emailSending"
               />
             </div>
 
             <div>
-              <input type="text" ref={subjectMailRef} required />
+              <input
+                type="text"
+                ref={subjectMailRef}
+                required
+                className="emailSending"
+                placeholder="subject"
+              />
             </div>
 
             <Editor
               editorState={editorState}
               onEditorStateChange={editorHandler}
+              placeholder="compose"
             />
           </div>
         </DialogContent>

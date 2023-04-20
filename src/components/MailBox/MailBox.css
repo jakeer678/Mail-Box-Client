@@ -43,4 +43,20 @@
   .unread .mail-body {
     font-weight: bold;
   }
-  
+  .formContainer {
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    flex-direction: column;
+   padding-top: 3rem;
+  }
+  .emailSending {
+    border: none;
+    border-bottom: 1px solid black;
+    margin: 1rem;
+    outline: none;
+  }
+  .btn {
+    margin-top: 2rem;
+  }
