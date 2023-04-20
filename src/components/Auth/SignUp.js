@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { authSliceActions } from "../store/AuthSlice";
 import { NavLink, useNavigate } from "react-router-dom";
+import { Button } from "@mui/material";
+import "./SignUp.css";
 
 const SignUp = () => {
   const [isLoading, setIsloading] = useState(false);
@@ -61,22 +63,26 @@ const SignUp = () => {
   };
 
   return (
-    <div>
+    <div className="signUpForm">
       <form onSubmit={signupSubmitHandler}>
-        <div>
+        <div  className="form-control_1">
           <label htmlFor="email">Email</label>
           <input ref={enteredEmailInputRef} required />
         </div>
-        <div>
+        <div  className="form-control_1">
           <label htmlFor="password">Password</label>
           <input ref={enteredPasswordInputRef} required />
         </div>
-        <div>
+        <div  className="form-control_1">
           <label htmlFor="cnfpassword">Confirm Password</label>
           <input ref={enteredConfirmPasswordInputRef} required />
         </div>
         <div>
-          {!isLoading && <button type="submit">SignUp</button>}
+          {!isLoading &&  <Button type="submit" variant="contained">
+                  SignUp
+                </Button>
+          
+          }
           {isLoading && <p>sending request</p>}
           <p>
             Already have an account? <NavLink to="/login">Login</NavLink>

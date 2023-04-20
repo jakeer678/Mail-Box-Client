@@ -34,6 +34,7 @@ import DraftsIcon from "@mui/icons-material/Drafts";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { useFetch } from "../RoutesPages/useFetch";
 
 const drawerWidth = 240;
 
@@ -72,44 +73,54 @@ const SideBar = () => {
   const { openDrawer, handleDrawerClose, handleClickOpen } =
     useContext(contextStore);
 
-  const getData = async () => {
-    const email = localStorage
-      .getItem("email")
-      .replace("@", "")
-      .replace(".", "");
-    console.log(email, "kkkk");
+  const email = localStorage.getItem("email").replace("@", "").replace(".", "");
+  console.log(email, "kkkk");
+  const { data, loading } = useFetch(
+    `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${email}.json`
+  );
 
-    try {
-      const response = await fetch(
-        `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${email}.json`
-      );
+  if (loading) {
+    return <p>Loading</p>;
+  }
 
-      if (!response.ok) {
-        throw new Error("Could not fetch cart data ");
-      }
+  // const getData = async () => {
+  //   const email = localStorage
+  //     .getItem("email")
+  //     .replace("@", "")
+  //     .replace(".", "");
+  //   console.log(email, "kkkk");
 
-      const data = await response.json();
-      console.log(data, "ssss");
+  //   try {
+  //     const response = await fetch(
+  //       `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${email}.json`
+  //     );
 
-      let count = 0;
-      for (let key in data) {
-        if (!data[key].read) {
-          count++;
-        }
-      }
-      setUnreadCount(count);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //     if (!response.ok) {
+  //       throw new Error("Could not fetch cart data ");
+  //     }
 
-  useEffect(() => {
-    getData();
-    const interval = setInterval(() => {
-      getData();
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
+  //     const data = await response.json();
+  //     console.log(data, "ssss");
+
+  //     let count = 0;
+  //     for (let key in data) {
+  //       if (!data[key].read) {
+  //         count++;
+  //       }
+  //     }
+  //     setUnreadCount(count);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getData();
+  //   const interval = setInterval(() => {
+  //     getData();
+  //   }, 2000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <div>

@@ -1,0 +1,9 @@
+.container {
+    width: 100%;
+    height: 60vh;
+    flex-wrap: nowrap;
+    
+}
+h2 {
+    text-align: center;
+}

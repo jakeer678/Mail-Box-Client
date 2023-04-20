@@ -2,6 +2,10 @@ import React, { Fragment, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { authSliceActions } from "../store/AuthSlice";
+import Button from '@mui/material/Button';
+import './Login.css'
+
+
 
 const Login = () => {
   const [isLoading, setIsloading] = useState(false);
@@ -45,22 +49,21 @@ const Login = () => {
 
   return (
     <Fragment>
-      <div>
+      <div className="form_1">
+      <h3>Login</h3>
         <form onSubmit={loginSubmitHandler}>
           <div>
-            <label htmlFor="email">Email</label>
-            <input ref={enteredEmailRef} required />
+            <input ref={enteredEmailRef} required className="form-control" placeholder="Email" />
           </div>
           <div>
-            <label htmlFor="password">Password</label>
-            <input ref={enteredPasswordRef} required />
+            <input ref={enteredPasswordRef} required className="form-control" placeholder="Password"/>
           </div>
           <div>
-            {!isLoading && <button type="submit">Login</button>}
+            {!isLoading && <Button type='submit' variant="contained">Login</Button>}
             {isLoading && <p>sending request</p>}
           </div>
           <p>
-            Don't have an account? <NavLink to="/signup">SignUp</NavLink>
+            Don't have an account? <NavLink to="/signup" className="forgot_pas1">SignUp</NavLink>
           </p>
         </form>
       </div>

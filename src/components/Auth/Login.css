@@ -1,0 +1,33 @@
+.form-control {
+    width: 20rem;
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+    border-radius: 0.5rem;
+   }
+   .form_1 {
+       display: flex;
+       align-items: center;
+       
+      
+       width: 25rem;
+       text-align: center;
+       opacity: 5;
+       flex-direction: column;
+       margin-left:25rem;
+      padding-top: 3rem;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding-bottom: 3rem;
+      height: 22rem;
+     background: url('https://media.istockphoto.com/id/1467877270/photo/cell-phone-on-a-dark-background-with-glowing-and-metallic-gears-3d-render.jpg?s=170667a&w=0&k=20&c=MW0FHK7GY1MmcJkYFgTD8PagKpWqHO7jye9PtI90Pao=');
+   }
+   
+   .form_1 h3 {
+       padding-bottom: 1rem;  
+       color: white;
+       font-family: 700;
+   }
+   .forgot_pas1 {
+    color: white;
+}

@@ -43,14 +43,16 @@ export default function Navbar() {
               <MenuIcon />
             </IconButton>
           )}
-          <Typography
-            variant="h6"
-            color="white"
-            component="div"
-            sx={{ flexGrow: 1 }}
-          >
-            <NavLink to="/">Home</NavLink>
-          </Typography>
+          {isLogin && (
+            <Typography
+              variant="h6"
+              color="white"
+              component="div"
+              sx={{ flexGrow: 1 }}
+            >
+              <NavLink to="/">Home</NavLink>
+            </Typography>
+          )}
           {isLogin && (
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               <NavLink to="/mailbox">MailBox</NavLink>

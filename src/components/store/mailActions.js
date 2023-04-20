@@ -5,7 +5,7 @@ export const addmail = async (mailData) => {
   const senderMail = mailData.fromMail.replace("@", "").replace(".", "");
   const recieverMail = mailData.tomail.replace("@", "").replace(".", "");
   try {
-    console.log(mailData,"jakeeeeeeeeeee")
+    console.log(mailData, "jakeeeeeeeeeee");
     const response = await axios.post(
       `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${senderMail}.json`,
       mailData
@@ -20,8 +20,9 @@ export const addmail = async (mailData) => {
     }
 
     const responseData = await response.data;
+    alert("mail sent successfully");
     console.log(responseData, "jjjj");
   } catch (error) {
-    console.log(error,"errrrror");
+    console.log(error, "errrrror");
   }
 };
