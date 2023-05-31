@@ -7,13 +7,13 @@ export const addmail = async (mailData) => {
   try {
     console.log(mailData, "jakeeeeeeeeeee");
     const response = await axios.post(
-      `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${senderMail}.json`,
+      `https://mail-box-client-808d3-default-rtdb.firebaseio.com/${senderMail}.json`,
       mailData
     );
 
     if (senderMail !== recieverMail) {
       const responseRecieve = await axios.post(
-        `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${recieverMail}.json`,
+        `https://mail-box-client-808d3-default-rtdb.firebaseio.com/${recieverMail}.json`,
         mailData
       );
       console.log(responseRecieve, "jjjj");

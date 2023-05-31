@@ -1,7 +1,23 @@
-.MuiBox-root .css-i9gxme a {
-    color: aliceblue;
-}
+
 .list_items {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(20, 68, 68);
+    flex-direction: column;
+    color: white;
+}
+.link {
+    color: white;
+    text-decoration: none;
+    margin-left: 10rem;
+}
+.inbox_item {
+    text-decoration: none;
+    color: black;
+    font-size: 1rem;
+}
+.messageList {
     display: flex;
     justify-content: center;
     align-items: center;

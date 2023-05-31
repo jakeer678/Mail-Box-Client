@@ -9,6 +9,7 @@ import MailBox from "../MailBox/MailBox";
 import Inbox from "../MailBox/Inbox";
 import Message from "../Navbar/Message";
 import SentMail from "../MailBox/SentMail";
+import AlertDialog from "../MailBox/AlertDialog";
 
 const RoutesApp = () => {
   return (

@@ -16,7 +16,7 @@ const SentMail = () => {
   const fetchMails = async () => {
     try {
       const response = await axios.get(
-        `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${emailUrl}.json`
+        `https://mail-box-client-808d3-default-rtdb.firebaseio.com/${emailUrl}.json`
       );
       const fetchResponse = response.data;
       console.log(fetchResponse);
@@ -50,8 +50,12 @@ const SentMail = () => {
           className={`mail-item ${item.read ? "read" : "unread"} `}
           onClick={() => handleMailClick(item)}
         >
-          <div>{item.fromMail}</div>
-          <div className="mail-title" onClick={() => handleNavigator(item)}>
+          <div
+            className="mail-title"
+            onClick={() => handleNavigator(item)}
+            type="checkbox"
+          >
+            <div>{item.fromMail}</div>
             {item.subjectMail}
             <div className="mail-body">{item.messsage}</div>
           </div>

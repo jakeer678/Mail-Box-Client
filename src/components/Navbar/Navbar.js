@@ -28,58 +28,68 @@ export default function Navbar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar>
-          {isLogin && (
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              onClick={handleDrawerOpen}
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-          )}
-          {isLogin && (
+    <div className="header">
+      <Box sx={{ flexGrow: 1 }}>
+        <AppBar position="static">
+          <Toolbar>
+            {isLogin && (
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                onClick={handleDrawerOpen}
+                sx={{ mr: 2 }}
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
+
             <Typography
               variant="h6"
               color="white"
               component="div"
               sx={{ flexGrow: 1 }}
             >
-              <NavLink to="/">Home</NavLink>
+              <NavLink to="/" className="link">
+                Home
+              </NavLink>
             </Typography>
-          )}
-          {isLogin && (
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              <NavLink to="/mailbox">MailBox</NavLink>
-            </Typography>
-          )}
 
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            {!isLogin && (
-              <Button color="inherit">
-                <NavLink to="/login">Login</NavLink>
-              </Button>
-            )}
-          </Typography>
-
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             {isLogin && (
-              <Button color="inherit" onClick={logout}>
-                <NavLink to="/login">Logout</NavLink>
-              </Button>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <NavLink to="/mailbox" className="link">
+                  MailBox
+                </NavLink>
+              </Typography>
             )}
-          </Typography>
-        </Toolbar>
-      </AppBar>
-      <div>
-        <SideBar />
-      </div>
-      <AlertDialog />
-    </Box>
+
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              {!isLogin && (
+                <Button color="inherit">
+                  <NavLink to="/login" className="link">
+                    Login
+                  </NavLink>
+                </Button>
+              )}
+            </Typography>
+
+            {isLogin && (
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                <Button color="inherit" onClick={logout}>
+                  <NavLink to="/login" className="link">
+                    Logout
+                  </NavLink>
+                </Button>
+              </Typography>
+            )}
+          </Toolbar>
+        </AppBar>
+        <div>
+          <SideBar />
+        </div>
+        <AlertDialog />
+      </Box>
+    </div>
   );
 }

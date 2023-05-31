@@ -4,7 +4,7 @@ import "./MailBox.css";
 import { mailSliceActions } from "../store/mailBoxSlice";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import Button from "@mui/material/Button";
 
 const Inbox = () => {
   const dispatch = useDispatch();
@@ -14,16 +14,32 @@ const Inbox = () => {
   const naviigate = useNavigate();
   console.log(mails, "sasasanoor");
 
-//   const email = localStorage.getItem("email").replace("@", "").replace(".", "");
-//   console.log(email, "kkkk");
-//   const { data, loading } = useFetch(
-//     `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${email}.json`
-//   );
+  //   const email = localStorage.getItem("email").replace("@", "").replace(".", "");
+  //   console.log(email, "kkkk");
+  //   const { data, loading } = useFetch(
+  //     `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${email}.json`
+  //   );
 
-// if(loading) {
-//   return <p>Loading</p>
-// }
+  // if(loading) {
+  //   return <p>Loading</p>
+  // }
+  const deleteMails = async (id) => {
+    const emailUrl = localStorage
+      .getItem("email")
+      .replace("@", "")
+      .replace(".", "");
+    try {
+      const response = await axios.delete(
+        `https://mail-box-client-808d3-default-rtdb.firebaseio.com/${emailUrl}/${id}.json`
+      );
 
+      const responseData = await response.data;
+      console.log(responseData);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const getData = async () => {
     const email = localStorage
       .getItem("email")
@@ -33,7 +49,7 @@ const Inbox = () => {
 
     try {
       const response = await fetch(
-        `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${email}.json`
+        `https://mail-box-client-808d3-default-rtdb.firebaseio.com/${email}.json`
       );
 
       if (!response.ok) {
@@ -53,23 +69,7 @@ const Inbox = () => {
     }
   };
 
-  const deleteMails = async (id) => {
-    const emailUrl = localStorage
-      .getItem("email")
-      .replace("@", "")
-      .replace(".", "");
-    try {
-      const response = await axios.delete(
-        `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${emailUrl}/${id}.json`
-      );
 
-      const responseData = await response.data;
-      console.log(responseData);
-      // getData();
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleMailClick = async (item) => {
     const getEmailUrl = localStorage
@@ -79,7 +79,7 @@ const Inbox = () => {
     if (!item.read) {
       try {
         await axios.patch(
-          `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${getEmailUrl}/${item.id}.json`,
+          `https://mail-box-client-808d3-default-rtdb.firebaseio.com/${getEmailUrl}/${item.id}.json`,
           { read: true }
         );
 
@@ -100,27 +100,39 @@ const Inbox = () => {
     getData();
     const interval = setInterval(() => {
       getData();
-    }, 2000);
+    }, 1000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="mail-list">
-      {mails.map((item) => (
-        <div
-          key={item.id}
-          className={`mail-item ${item.read ? "read" : "unread"} `}
-          onClick={() => handleMailClick(item)}
-        >
-          <div>{item.fromMail}</div>
-          <div className="mail-title" onClick={() => handleNavigator(item)}>
-            <div>{item.subjectMail}</div>
-            <div className="mail-body">{item.messsage}</div>
-          </div>
+      {mails.length >= 1 &&
+        mails.map((item) => (
+          <div
+            key={item.id}
+            className={`mail-item ${item.read ? "read" : "unread"} `}
+            onClick={() => handleMailClick(item)}
+          >
+            <div className="mail-title" onClick={() => handleNavigator(item)}>
+              <div>{item.fromMail}</div>
+              <div className="mail-body">{item.subjectMail}</div>
+              <div className="mail-body">{item.message}</div>
+            </div>
 
-          <button onClick={() => deleteMails(item.id)}>Delete</button>
-        </div>
-      ))}
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => deleteMails(item.id)}
+            >
+              Delete
+            </Button>
+          </div>
+        ))}
+      {mails.length === 0 && (
+        <p style={{ color: "red" }}>
+          No mails found and Please add mails to the inbox
+        </p>
+      )}
     </div>
   );
 };

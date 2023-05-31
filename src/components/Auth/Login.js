@@ -2,10 +2,8 @@ import React, { Fragment, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { authSliceActions } from "../store/AuthSlice";
-import Button from '@mui/material/Button';
-import './Login.css'
-
-
+import Button from "@mui/material/Button";
+import "./Login.css";
 
 const Login = () => {
   const [isLoading, setIsloading] = useState(false);
@@ -21,7 +19,7 @@ const Login = () => {
     try {
       setIsloading(true);
       const response = await fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA9tmpySXBMWFICtTw8m1zuKe7l3K1eNmg",
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCjwBh13Bk23Kh5f_eKQh3yJMPkrfAaN1c",
         {
           method: "POST",
           body: JSON.stringify({
@@ -33,6 +31,7 @@ const Login = () => {
       );
       setIsloading(false);
       const responseData = await response.json();
+      console.log(responseData,"login")
       const token = responseData.idToken;
       if (token) {
         alert("Login successfull");
@@ -41,7 +40,8 @@ const Login = () => {
         alert("Login failed");
       }
       localStorage.setItem("email", responseData.email);
-      dispatch(authSliceActions.login(responseData.idToken));
+      localStorage.setItem("idToken", responseData.idToken);
+      // dispatch(authSliceActions.login(responseData.idToken));
     } catch (error) {
       console.log(error);
     }
@@ -50,20 +50,37 @@ const Login = () => {
   return (
     <Fragment>
       <div className="form_1">
-      <h3>Login</h3>
+        <h3>Login</h3>
         <form onSubmit={loginSubmitHandler}>
           <div>
-            <input ref={enteredEmailRef} required className="form-control" placeholder="Email" />
+            <input
+              ref={enteredEmailRef}
+              required
+              className="form-control"
+              placeholder="Email"
+            />
           </div>
           <div>
-            <input ref={enteredPasswordRef} required className="form-control" placeholder="Password"/>
+            <input
+              ref={enteredPasswordRef}
+              required
+              className="form-control"
+              placeholder="Password"
+            />
           </div>
           <div>
-            {!isLoading && <Button type='submit' variant="contained">Login</Button>}
+            {!isLoading && (
+              <Button type="submit" variant="contained">
+                Login
+              </Button>
+            )}
             {isLoading && <p>sending request</p>}
           </div>
           <p>
-            Don't have an account? <NavLink to="/signup" className="forgot_pas1">SignUp</NavLink>
+            Don't have an account?{" "}
+            <NavLink to="/signup" className="forgot_pas1">
+              SignUp
+            </NavLink>
           </p>
         </form>
       </div>

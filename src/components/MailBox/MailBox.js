@@ -6,7 +6,6 @@ import Button from "@mui/material/Button";
 import "./MailBox.css";
 import { addmail } from "../store/mailActions";
 
-
 const MailBox = () => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
@@ -33,31 +32,37 @@ const MailBox = () => {
 
   return (
     <div className="formContainer">
-      <div>
-        <input
-          type="email"
-          ref={sendingMailRef}
-          required
-          placeholder="To"
-          className="emailSending"
-        />
-      </div>
+      <form onSubmit={handleSubmit}>
+        <div>
+          <input
+            type="email"
+            ref={sendingMailRef}
+            required
+            placeholder="To"
+            className="emailSending"
+          />
+        </div>
 
-      <div>
-        <input
-          type="text"
-          ref={subjectMailRef}
-          required
-          className="emailSending"
-          placeholder="subject"
+        <div>
+          <input
+            type="text"
+            ref={subjectMailRef}
+            required
+            className="emailSending"
+            placeholder="subject"
+          />
+        </div>
+        <Editor
+          editorState={editorState}
+          onEditorStateChange={editorHandler}
+          placeholder="compose"
         />
-      </div>
-      <Editor editorState={editorState} onEditorStateChange={editorHandler} placeholder="compose"/>
-      <div  className="btn">
-        <Button onClick={handleSubmit} type="submit" variant="contained">
-          Send mail
-        </Button>
-      </div>
+        <div className="btn">
+          <Button type="submit" variant="contained">
+            Send mail
+          </Button>
+        </div>
+      </form>
     </div>
   );
 };

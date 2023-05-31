@@ -32,7 +32,7 @@ const SignUp = () => {
       try {
         setIsloading(true);
         const response = await fetch(
-          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA9tmpySXBMWFICtTw8m1zuKe7l3K1eNmg",
+          "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCjwBh13Bk23Kh5f_eKQh3yJMPkrfAaN1c",
           {
             method: "POST",
             body: JSON.stringify({
@@ -47,6 +47,7 @@ const SignUp = () => {
         );
         setIsloading(false);
         const responseData = await response.json();
+        console.log(responseData,"Signup")
         const token = !!responseData.idToken;
         if (token) {
           alert("You have signedUp successfully");
@@ -54,7 +55,8 @@ const SignUp = () => {
         } else {
           alert("SignUp failed");
         }
-
+        localStorage.setItem("email",responseData.email)
+        localStorage.setItem("idToken", responseData.idToken)
         dispatch(authSliceActions.login(responseData.idToken));
       } catch (error) {
         console.log(error);

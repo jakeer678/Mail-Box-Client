@@ -4,7 +4,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useContext, useRef, useState } from "react";
-import { Editor } from "react-draft-wysiwyg";
+import { Editor, EditorState } from "react-draft-wysiwyg";
 import { contextStore } from "../UseContext/ContextStore";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import { addmail } from "../store/mailActions";
@@ -28,11 +28,9 @@ export default function AlertDialog() {
       fromMail: localStorage.getItem("email"),
       tomail: sendingMailRef.current.value,
       subjectMail: subjectMailRef.current.value,
-      messsage: editorState.getCurrentContent().getPlainText(),
+      
     };
     addmail(mailData);
-    sendingMailRef.current.value = "";
-    subjectMailRef.current.value = "";
   };
 
   return (

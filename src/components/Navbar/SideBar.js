@@ -1,26 +1,7 @@
-// import { Button } from "@mui/material";
-// import React, { useContext } from "react";
-// import { contextStore } from "../UseContext/ContextStore";
-
-// const SideBar = () => {
-//   const { handleClickOpen } = useContext(contextStore);
-//   return (
-//     <div>
-//       <Button variant="outlined" onClick={handleClickOpen}>
-//         compose
-//       </Button>
-//     </div>
-//   );
-// };
-
-// export default SideBar;
-
+import Button from "@mui/material/Button";
 import React, { useContext, useEffect, useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
-
 import Drawer from "@mui/material/Drawer";
-import ForwardToInboxIcon from "@mui/icons-material/ForwardToInbox";
-
 import AttachEmailIcon from "@mui/icons-material/AttachEmail";
 import List from "@mui/material/List";
 import IosShareIcon from "@mui/icons-material/IosShare";
@@ -30,11 +11,9 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import { contextStore } from "../UseContext/ContextStore";
 import { IconButton } from "@mui/material";
-import DraftsIcon from "@mui/icons-material/Drafts";
+
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
-import axios from "axios";
-import { useFetch } from "../RoutesPages/useFetch";
 
 const drawerWidth = 240;
 
@@ -67,6 +46,7 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 }));
 const SideBar = () => {
   const [unreadCount, setUnreadCount] = useState(0);
+  console.log(unreadCount, "counts");
   const theme = useTheme();
   const total = useSelector((state) => state.mailBox.mails);
   const totalNum = total.length;
@@ -92,12 +72,8 @@ const SideBar = () => {
 
     try {
       const response = await fetch(
-        `https://mailbox-2ed6d-default-rtdb.firebaseio.com/${email}.json`
+        `https://mail-box-client-808d3-default-rtdb.firebaseio.com/${email}.json`
       );
-
-      if (!response.ok) {
-        throw new Error("Could not fetch cart data ");
-      }
 
       const data = await response.json();
       console.log(data, "ssss");
@@ -106,9 +82,11 @@ const SideBar = () => {
       for (let key in data) {
         if (!data[key].read) {
           count++;
+          console.log(count,"lllllllllll")
+          setUnreadCount(count);
         }
       }
-      setUnreadCount(count);
+     
     } catch (error) {
       console.log(error);
     }
@@ -118,7 +96,7 @@ const SideBar = () => {
     getData();
     const interval = setInterval(() => {
       getData();
-    }, 2000);
+    }, 2000)
     return () => clearInterval(interval);
   }, []);
 
@@ -137,7 +115,6 @@ const SideBar = () => {
         anchor="left"
         open={openDrawer}
       >
-        <button onClick={handleClickOpen}>Compose</button>
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
             {theme.direction === "ltr" ? (
@@ -148,16 +125,19 @@ const SideBar = () => {
           </IconButton>
         </DrawerHeader>
         <Divider />
-
+        <Button variant="outlined" color="error" onClick={handleClickOpen}>
+          Compose
+        </Button>
         <List>
           <div>
-            <NavLink to="/inbox">
+            <NavLink to="/inbox" className="inbox_item">
               <AttachEmailIcon />
-              Inbox {totalNum}({unreadCount} unread)
+              {/* Inbox+ {totalNum} */}
+              (unread {unreadCount} )
             </NavLink>
           </div>
           <div>
-            <NavLink to="/sentmail">
+            <NavLink to="/sentmail" className="inbox_item">
               <IosShareIcon />
               Sent mail
             </NavLink>
